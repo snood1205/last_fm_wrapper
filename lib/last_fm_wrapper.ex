@@ -1,0 +1,2 @@
+defmodule LastFmWrapper do
+end
