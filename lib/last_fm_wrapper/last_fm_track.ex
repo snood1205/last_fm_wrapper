@@ -7,6 +7,6 @@ defmodule LastFmWrapper.LastFmTrack do
 
   def process_response_body(body) do
     body
-    |> Poison.decode!
+    |> Poison.decode!()
   end
 end

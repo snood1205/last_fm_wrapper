@@ -1,6 +1,7 @@
 defmodule LastFmWrapper.TrackFetcher do
   alias LastFmWrapper.{Configuration, Database, LastFmTrack, Track, Url}
 
+  @spec fetch_new_tracks(Configuration.t, DateTime.t) :: [map]
   def fetch_new_tracks(configuration = %Configuration{}, last_time) do
     total_pages = fetch_total_pages(configuration) |> String.to_integer()
     IO.puts("Total pages fetched: #{total_pages}\n")

@@ -19,6 +19,7 @@ defmodule LastFmWrapper.MixProject do
 
   defp deps do
     [
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:dotenv, "~> 3.0.0"},
       {:httpoison, "~> 1.6"},
       {:poison, "~> 3.1"},
