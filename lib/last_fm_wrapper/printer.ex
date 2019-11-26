@@ -1,7 +1,7 @@
 defmodule LastFmWrapper.Printer do
   alias LastFmWrapper.Configuration
 
-  @spec print(map, Configuration.t) :: map
+  @spec print(map, Configuration.t()) :: map
   def print(track, %Configuration{print: true}) do
     track
     |> IO.inspect()

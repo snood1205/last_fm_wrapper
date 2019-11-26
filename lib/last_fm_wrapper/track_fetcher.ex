@@ -1,12 +1,12 @@
 defmodule LastFmWrapper.TrackFetcher do
   alias LastFmWrapper.{Configuration, LastFmTrack, Track, Url}
 
-  @spec fetch_new_tracks(Configuration.t, DateTime.t) :: [map]
+  @spec fetch_new_tracks(Configuration.t(), DateTime.t()) :: [map]
   def fetch_new_tracks(configuration = %Configuration{}, last_time) do
     total_pages = fetch_total_pages(configuration) |> String.to_integer()
     IO.puts("Total pages fetched: #{total_pages}\n")
 
-    Enum.map(1..total_pages, fn page_number ->
+    Enum.map(total_pages..1, fn page_number ->
       fetch_tracks(configuration, page_number)
       |> process_tracks(last_time, configuration)
     end)
@@ -28,12 +28,19 @@ defmodule LastFmWrapper.TrackFetcher do
   end
 
   defp process_tracks(tracks, last_time, configuration) do
-    Enum.map(tracks, &Track.process_and_append(&1, last_time, configuration))
+    tracks
+    |> filter_now_playing()
+    |> Enum.map(&Track.process_and_append(&1, last_time, configuration))
   end
 
   defp fetch_page(configuration, page_number) do
     configuration
     |> Url.generate_url(page_number)
     |> LastFmTrack.get!()
+  end
+
+  defp filter_now_playing(tracks) do
+    tracks
+    |> Enum.reject(fn track -> track["date"]["uts"] == nil end)
   end
 end
