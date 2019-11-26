@@ -1,5 +1,5 @@
 defmodule LastFmWrapper.TrackFetcher do
-  alias LastFmWrapper.{Configuration, Database, LastFmTrack, Track, Url}
+  alias LastFmWrapper.{Configuration, LastFmTrack, Track, Url}
 
   @spec fetch_new_tracks(Configuration.t, DateTime.t) :: [map]
   def fetch_new_tracks(configuration = %Configuration{}, last_time) do
@@ -28,8 +28,7 @@ defmodule LastFmWrapper.TrackFetcher do
   end
 
   defp process_tracks(tracks, last_time, configuration) do
-    db_pid = Database.start(configuration)
-    Enum.map(tracks, &Track.process_and_append(&1, last_time, configuration, db_pid))
+    Enum.map(tracks, &Track.process_and_append(&1, last_time, configuration))
   end
 
   defp fetch_page(configuration, page_number) do
