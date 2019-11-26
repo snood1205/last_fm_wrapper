@@ -29,6 +29,11 @@ defmodule LastFmWrapper.TrackFetcher do
     response.body["recenttracks"]["track"]
   end
 
+  def filter_now_playing(tracks) do
+    tracks
+    |> Enum.reject(fn track -> track["date"]["uts"] == nil end)
+  end
+
   ###############################################
 
   defp fetch_total_pages(configuration) do
@@ -55,10 +60,5 @@ defmodule LastFmWrapper.TrackFetcher do
   defp process_tracks(tracks) do
     tracks
     |> filter_now_playing()
-  end
-
-  defp filter_now_playing(tracks) do
-    tracks
-    |> Enum.reject(fn track -> track["date"]["uts"] == nil end)
   end
 end
