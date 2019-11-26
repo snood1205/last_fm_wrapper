@@ -1,4 +1,5 @@
 # LastFmWrapper
+[![CircleCI](https://circleci.com/gh/snood1205/last_fm_wrapper.svg?style=svg)](https://circleci.com/gh/snood1205/last_fm_wrapper)
 
 A small wrapper around last.fm in early development.
 
