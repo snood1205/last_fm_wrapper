@@ -20,20 +20,6 @@ defmodule LastFmWrapper.TrackFetcher do
     end)
   end
 
-  def fetch_page(configuration = %Configuration{}, page_number \\ 1) do
-    response =
-      configuration
-      |> Url.generate_url(page_number)
-      |> LastFmTrack.get!()
-
-    response.body["recenttracks"]["track"]
-  end
-
-  def filter_now_playing(tracks) do
-    tracks
-    |> Enum.reject(fn track -> track["date"]["uts"] == nil end)
-  end
-
   ###############################################
 
   defp fetch_total_pages(configuration) do
@@ -60,5 +46,16 @@ defmodule LastFmWrapper.TrackFetcher do
   defp process_tracks(tracks) do
     tracks
     |> filter_now_playing()
+  end
+
+  defp fetch_page(configuration = %Configuration{}, page_number) do
+    configuration
+    |> Url.generate_url(page_number)
+    |> LastFmTrack.get!()
+  end
+
+  defp filter_now_playing(tracks) do
+    tracks
+    |> Enum.reject(fn track -> track["date"]["uts"] == nil end)
   end
 end
