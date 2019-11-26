@@ -22,8 +22,7 @@ defmodule LastFmWrapper.MixProject do
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:dotenv, "~> 3.0.0"},
       {:httpoison, "~> 1.6"},
-      {:poison, "~> 3.1"},
-      {:postgrex, "~> 0.15"}
+      {:poison, "~> 3.1"}
     ]
   end
 end

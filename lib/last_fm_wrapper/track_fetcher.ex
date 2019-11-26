@@ -15,7 +15,7 @@ defmodule LastFmWrapper.TrackFetcher do
     total_pages = fetch_total_pages(configuration)
     Enum.map(total_pages..1, fn page_number ->
       fetch_tracks(configuration, page_number)
-      |> process_tracks(configuration)
+      |> process_tracks()
     end)
   end
 
@@ -48,10 +48,9 @@ defmodule LastFmWrapper.TrackFetcher do
     |> Enum.map(&Track.process_and_append(&1, last_time, configuration))
   end
 
-  defp process_tracks(tracks, configuration) do
+  defp process_tracks(tracks) do
     tracks
     |> filter_now_playing()
-    |> Enum.map(&Track.process_and_append(&1))
   end
 
 
