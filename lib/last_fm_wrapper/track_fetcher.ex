@@ -3,13 +3,26 @@ defmodule LastFmWrapper.TrackFetcher do
 
   @spec fetch_new_tracks(Configuration.t(), DateTime.t()) :: [map]
   def fetch_new_tracks(configuration = %Configuration{}, last_time) do
-    total_pages = fetch_total_pages(configuration) |> String.to_integer()
-    IO.puts("Total pages fetched: #{total_pages}\n")
+    total_pages = fetch_total_pages(configuration)
 
-    Enum.map(total_pages..1, fn page_number ->
+    Enum.map(1..total_pages, fn page_number ->
       fetch_tracks(configuration, page_number)
       |> process_tracks(last_time, configuration)
     end)
+  end
+
+  def fetch_all_tracks(configuration = %Configuration{}) do
+    total_pages = fetch_total_pages(configuration)
+    Enum.map(total_pages..1, fn page_number ->
+      fetch_tracks(configuration, page_number)
+      |> process_tracks(configuration)
+    end)
+  end
+
+  def fetch_page(configuration = %Configuration{}, page_number \\ 1) do
+    configuration
+    |> Url.generate_url(page_number)
+    |> LastFmTrack.get!()
   end
 
   ###############################################
@@ -17,7 +30,9 @@ defmodule LastFmWrapper.TrackFetcher do
   defp fetch_total_pages(configuration) do
     IO.puts("Fetching total pages...")
     response = fetch_page(configuration, 1)
-    response.body["recenttracks"]["@attr"]["totalPages"]
+    total_pages = response.body["recenttracks"]["@attr"]["totalPages"]
+    IO.puts("Total pages fetched: #{total_pages}\n")
+    total_pages |> String.to_integer()
   end
 
   defp fetch_tracks(configuration, page_number) do
@@ -33,11 +48,12 @@ defmodule LastFmWrapper.TrackFetcher do
     |> Enum.map(&Track.process_and_append(&1, last_time, configuration))
   end
 
-  defp fetch_page(configuration, page_number) do
-    configuration
-    |> Url.generate_url(page_number)
-    |> LastFmTrack.get!()
+  defp process_tracks(tracks, configuration) do
+    tracks
+    |> filter_now_playing()
+    |> Enum.map(&Track.process_and_append(&1))
   end
+
 
   defp filter_now_playing(tracks) do
     tracks
