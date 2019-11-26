@@ -4,7 +4,7 @@ defmodule LastFmWrapper.MixProject do
   def project do
     [
       app: :last_fm_wrapper,
-      version: "0.1.0",
+      version: "0.1.0-alpha",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -19,7 +19,6 @@ defmodule LastFmWrapper.MixProject do
 
   defp deps do
     [
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:dotenv, "~> 3.0.0"},
       {:httpoison, "~> 1.6"},
       {:poison, "~> 3.1"}
