@@ -25,7 +25,8 @@ defmodule LastFmWrapper.MixProject do
     [
       {:dotenv, "~> 3.0.0"},
       {:httpoison, "~> 1.6"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
