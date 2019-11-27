@@ -10,6 +10,7 @@ defmodule LastFmWrapper.MixProject do
       description: description(),
       package: package(),
       deps: deps(),
+      test_coverage: test_coverage(),
       name: "last.fm Wrapper",
       source_url: "https://github.com/snood1205/last_fm_wrapper"
     ]
@@ -26,7 +27,8 @@ defmodule LastFmWrapper.MixProject do
       {:dotenv, "~> 3.0.0"},
       {:httpoison, "~> 1.6"},
       {:poison, "~> 3.1"},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
@@ -40,5 +42,9 @@ defmodule LastFmWrapper.MixProject do
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/snood1205/last_fm_wrapper"}
     ]
+  end
+
+  defp test_coverage do
+    [tool: ExCoveralls]
   end
 end

@@ -1,5 +1,6 @@
 # LastFmWrapper
 [![CircleCI](https://circleci.com/gh/snood1205/last_fm_wrapper.svg?style=svg)](https://circleci.com/gh/snood1205/last_fm_wrapper)
+[![Hex.PM](https://img.shields.io/hexpm/v/last_fm_wrapper.svg)(https://hex.pm/packages/last_fm_wrapper)]
 
 A small wrapper around last.fm in early development.
 

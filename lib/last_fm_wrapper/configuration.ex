@@ -1,6 +1,4 @@
 defmodule LastFmWrapper.Configuration do
-  alias LastFmWrapper.Configuration
-
   defstruct(
     api_key: "",
     username: "",
@@ -21,9 +19,9 @@ defmodule LastFmWrapper.Configuration do
       %LastFmWrapper.Configuration{api_key: "12345ab678b90123c4d5678d901e2f3a",
                                    username: "fake_username"}
   """
-  @spec load_from_env :: Configuration.t()
+  @spec load_from_env() :: %__MODULE__{}
   def load_from_env() do
-    %Configuration{
+    %__MODULE__{
       api_key: System.get_env("API_KEY"),
       username: System.get_env("USERNAME")
     }
