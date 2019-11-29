@@ -40,8 +40,9 @@ defmodule LastFmWrapper.RunnerTest do
   end
 
   defp tomorrow do
-    DateTime.utc_now()
-    |> DateTime.add(60 * 60 * 24, :second)
+    NaiveDateTime.utc_now()
+    |> NaiveDateTime.add(60 * 60 * 24, :second)
+    |> DateTime.from_naive!("Etc/UTC")
     |> DateTime.to_unix()
     |> Integer.to_string()
   end

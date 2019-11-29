@@ -5,7 +5,7 @@ defmodule LastFmWrapper.MixProject do
     [
       app: :last_fm_wrapper,
       version: "0.1.0-alpha",
-      elixir: "~> 1.9",
+      elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
