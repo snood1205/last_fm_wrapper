@@ -18,39 +18,21 @@ jobs:
       - checkout
       - run: mix local.hex --force
       - run: mix local.rebar --force
-      - restore_cache:
-          keys:
-            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-            - v1-mix-cache-{{ .Branch }}
-            - v1-mix-cache
-      - restore_cache:
-          keys:
-            - v1-build-cache-{{ .Branch }}
-            - v1-build-cache
       - run: mix do deps.get, compile
-      - save_cache:
-          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-          paths: "deps"
-      - save_cache:
-          key: v1-mix-cache-{{ .Branch }}
-          paths: "deps"
-      - save_cache:
-          key: v1-mix-cache
-          paths: "deps"
-      - save_cache:
-          key: v1-build-cache-{{ .Branch }}
-          paths: "_build"
-      - save_cache:
-          key: v1-build-cache
-          paths: "_build"
       - run: mix test
       - store_test_results:
-          path: _build/test/lib/last_fm_wrapper
+          path: _build/test/1.9/lib/last_fm_wrapper
   test-1.8:
     <<: *test-template
     docker:
       - image: circleci/elixir:1.8.2
+    steps:
+      - store_test_results:
+          path: _build/test/1.8/lib/last_fm_wrapper
   test-1.7:
     <<: *test-template
     docker:
       - image: circleci/elixir:1.7.4
+    steps:
+      - store_test_results:
+          path: _build/test/1.7/lib/last_fm_wrapper
