@@ -12,7 +12,8 @@ defmodule LastFmWrapper.MixProject do
       deps: deps(),
       test_coverage: test_coverage(),
       name: "last.fm Wrapper",
-      source_url: "https://github.com/snood1205/last_fm_wrapper"
+      source_url: "https://github.com/snood1205/last_fm_wrapper",
+      preferred_cli_env: preferred_cli_env()
     ]
   end
 
@@ -28,7 +29,8 @@ defmodule LastFmWrapper.MixProject do
       {:httpoison, "~> 1.6"},
       {:poison, "~> 3.1"},
       {:mock, "~> 0.3.0", only: :test},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:exvcr, "~> 0.10", only: :test}
     ]
   end
 
@@ -46,5 +48,9 @@ defmodule LastFmWrapper.MixProject do
 
   defp test_coverage do
     [tool: ExCoveralls]
+  end
+
+  defp preferred_cli_env do
+    [vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test]
   end
 end

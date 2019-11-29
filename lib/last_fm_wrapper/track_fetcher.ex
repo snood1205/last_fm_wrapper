@@ -1,7 +1,7 @@
 defmodule LastFmWrapper.TrackFetcher do
-  alias LastFmWrapper.{Configuration, LastFmTrack, Track, Url}
+  alias LastFmWrapper.{Configuration, LastFmTrack, Printer, Track, Url}
 
-  @spec fetch_new_tracks(Configuration.t(), DateTime.t()) :: [map]
+  @spec fetch_new_tracks(Configuration.t(), NaiveDateTime.t()) :: [map]
   def fetch_new_tracks(configuration = %Configuration{}, last_time) do
     total_pages = fetch_total_pages(configuration)
 
@@ -23,15 +23,15 @@ defmodule LastFmWrapper.TrackFetcher do
   ###############################################
 
   defp fetch_total_pages(configuration) do
-    IO.puts("Fetching total pages...")
+    Printer.print("Fetching total pages...", configuration)
     response = fetch_page(configuration, 1)
     total_pages = response.body["recenttracks"]["@attr"]["totalPages"]
-    IO.puts("Total pages fetched: #{total_pages}\n")
+    Printer.print("Total pages fetched: #{total_pages}\n", configuration)
     total_pages |> String.to_integer()
   end
 
   defp fetch_tracks(configuration, page_number) do
-    IO.puts("Fetching page #{page_number}")
+    Printer.print("Fetching page #{page_number}", configuration)
     response = fetch_page(configuration, page_number)
 
     response.body["recenttracks"]["track"]

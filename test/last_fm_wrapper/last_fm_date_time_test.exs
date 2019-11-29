@@ -1,5 +1,5 @@
 defmodule LastFmWrapper.LastFmDateTimeTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
 
   test "uts_to_datetime converts a valid uts string into a naive datetime" do
     assert LastFmWrapper.LastFmDateTime.uts_to_datetime("0") == ~N[1970-01-01 00:00:00]
