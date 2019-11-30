@@ -1,0 +1,44 @@
+name: Elixir CI
+
+on: push
+
+jobs:
+  test-19:
+    runs-on: ubuntu-latest
+    container:
+      image: elixir:1.9.4-slim
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: Run tests
+      run: mix test
+  test-18:
+    runs-on: ubuntu-latest
+    container:
+      image: elixir:1.8.2-slim
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: Run tests
+      run: mix test
+  test-17:
+    runs-on: ubuntu-latest
+    container:
+      image: elixir:1.7.4-slim
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: Run tests
+      run: mix test
