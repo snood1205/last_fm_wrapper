@@ -3,10 +3,8 @@ defmodule LastFmWrapper.Authorization do
 
   def get_session(configuration = %Configuration{token: token}) do
     response =
-      configuration
-      |> Url.generate_url("auth.getsession")
-      |> Url.join_params(%{token: token})
-      |> Url.as_json()
+      %{method: "auth.getsession", token: token, format: :json}
+      |> Url.generate(configuration)
       |> Api.get!()
 
     response
@@ -14,9 +12,8 @@ defmodule LastFmWrapper.Authorization do
 
   def get_token(configuration = %Configuration{}) do
     response =
-      configuration
-      |> Url.generate_url("auth.gettoken")
-      |> Url.as_json()
+      %{method: "auth.gettoken", format: :json}
+      |> Url.generate(configuration)
       |> Api.get!()
 
     response.body["token"]

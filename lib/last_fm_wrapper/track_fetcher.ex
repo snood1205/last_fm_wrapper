@@ -49,14 +49,8 @@ defmodule LastFmWrapper.TrackFetcher do
   end
 
   defp fetch_page(configuration = %Configuration{username: user}, page_number) do
-    configuration
-    |> Url.generate(%{
-      method: "user.getrecenttracks",
-      page: page_number,
-      user: user,
-      format: :json
-    })
-    |> Url.as_json()
+    %{method: "user.getrecenttracks", page: page_number, user: user, format: :json}
+    |> Url.generate(configuration)
     |> Api.get!()
   end
 
