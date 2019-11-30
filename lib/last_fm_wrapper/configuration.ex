@@ -1,7 +1,9 @@
 defmodule LastFmWrapper.Configuration do
   defstruct(
     api_key: "",
+    session_key: "",
     username: "",
+    token: "",
     print: false
   )
 

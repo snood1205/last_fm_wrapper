@@ -1,4 +1,4 @@
-defmodule LastFmWrapper.LastFmTrack do
+defmodule LastFmWrapper.Api do
   use HTTPoison.Base
 
   def process_request_url(url) do

@@ -1,5 +1,5 @@
 defmodule LastFmWrapper.TrackFetcher do
-  alias LastFmWrapper.{Configuration, LastFmTrack, Printer, Track, Url}
+  alias LastFmWrapper.{Configuration, Api, Printer, Track, Url}
 
   @spec fetch_new_tracks(Configuration.t(), NaiveDateTime.t()) :: [map]
   def fetch_new_tracks(configuration = %Configuration{}, last_time) do
@@ -48,10 +48,16 @@ defmodule LastFmWrapper.TrackFetcher do
     |> filter_now_playing()
   end
 
-  defp fetch_page(configuration = %Configuration{}, page_number) do
+  defp fetch_page(configuration = %Configuration{username: user}, page_number) do
     configuration
-    |> Url.generate_url(page_number)
-    |> LastFmTrack.get!()
+    |> Url.generate(%{
+      method: "user.getrecenttracks",
+      page: page_number,
+      user: user,
+      format: :json
+    })
+    |> Url.as_json()
+    |> Api.get!()
   end
 
   defp filter_now_playing(tracks) do

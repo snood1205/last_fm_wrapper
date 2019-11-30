@@ -27,3 +27,4 @@ last_fm_wrapper-*.tar
 
 .env
 .tool-versions
+script.exs

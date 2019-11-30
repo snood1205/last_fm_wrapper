@@ -12,7 +12,7 @@ defmodule LastFmWrapper.TrackFetcherTest do
 
   defp test_tracks_structure(tracks) do
     assert is_list(tracks)
-    assert is_list(hd tracks)
-    assert !is_list(hd hd tracks)
+    assert is_list(hd(tracks))
+    assert !is_list(hd(hd(tracks)))
   end
 end
