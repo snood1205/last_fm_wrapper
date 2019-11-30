@@ -3,7 +3,7 @@ name: Elixir CI
 on: push
 
 jobs:
-  test-1.9:
+  test-19:
     runs-on: ubuntu-latest
     container:
       image: elixir:1.9.4-slim
@@ -16,7 +16,7 @@ jobs:
         mix deps.get
     - name: Run tests
       run: mix test
-  test-1.8:
+  test-18:
     runs-on: ubuntu-latest
     container:
       image: elixir:1.8.2-slim
@@ -29,7 +29,7 @@ jobs:
         mix deps.get
     - name: Run tests
       run: mix test
-  test-1.7:
+  test-17:
     runs-on: ubuntu-latest
     container:
       image: elixir:1.7.4-slim
