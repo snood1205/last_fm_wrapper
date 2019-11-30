@@ -1,0 +1,27 @@
+name: Elixir CI
+
+on: push
+
+jobs:
+  test-1.9: &test-template
+    runs-on: ubuntu-latest
+    container:
+      image: elixir:1.9.4-slim
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: Run tests
+      run: mix test
+  test-1.8:
+    <<: *test-template
+    container:
+      image: elixir:1.8.2-slim
+  test-1.8:
+    <<: *test-template
+    container:
+      image: elixir:1.7.4-slim
