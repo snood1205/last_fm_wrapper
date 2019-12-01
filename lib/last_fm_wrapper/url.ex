@@ -3,9 +3,13 @@ defmodule LastFmWrapper.Url do
 
   def generate(params, configuration \\ %Configuration{}, options \\ nil)
 
-  def generate(params = %{}, %Configuration{api_key: api_key}, :with_signature) do
+  def generate(
+        params = %{},
+        %Configuration{api_key: api_key, shared_secret: shared_secret},
+        :with_signature
+      ) do
     params = Map.put(params, :api_key, api_key)
-    "?" <> convert_to_query_params(params) <> "&" <> generate_signature(params)
+    "?" <> convert_to_query_params(params) <> "&" <> generate_signature(params, shared_secret)
   end
 
   def generate(params = %{}, %Configuration{api_key: api_key}, nil) do
@@ -17,16 +21,18 @@ defmodule LastFmWrapper.Url do
     "?" <> convert_to_query_params(params)
   end
 
-  defp generate_signature(params) do
+  defp generate_signature(params, secret) do
     signature_input =
       params
-      |> Enum.map(fn {k, v} -> k <> v end)
+      |> Enum.map(fn tuple -> tuple |> Tuple.to_list() |> Enum.join() end)
       |> Enum.sort()
       |> Enum.join()
+      |> String.replace("formatjson", "")
 
     signature =
-      :crypto.hash(:md5, signature_input)
+      :crypto.hash(:md5, signature_input <> secret)
       |> Base.encode16()
+      |> String.downcase()
 
     "api_sig=#{signature}"
   end

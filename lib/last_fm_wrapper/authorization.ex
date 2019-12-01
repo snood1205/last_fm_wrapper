@@ -1,10 +1,10 @@
 defmodule LastFmWrapper.Authorization do
   alias LastFmWrapper.{Api, Configuration, Url}
 
-  def get_session(configuration = %Configuration{token: token}) do
+  def get_session(configuration = %Configuration{token: token}) when not is_nil(token) do
     response =
       %{method: "auth.getsession", token: token, format: :json}
-      |> Url.generate(configuration)
+      |> Url.generate(configuration, :with_signature)
       |> Api.get!()
 
     response
